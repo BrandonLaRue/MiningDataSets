@@ -39,6 +39,13 @@ public class ShingleTest {
 		} catch (IllegalArgumentException e) {
 			// Do nothing
 		}
+		
+		try {
+			Shingle.getShingles(0, "");
+			fail("Should have throw IllegalArgumentException - k out of bounds");
+		} catch (IllegalArgumentException e) {
+			// Do nothing
+		}
 	}
 	
 	@Test
@@ -47,6 +54,19 @@ public class ShingleTest {
 		String[] expected = {"ab", "bc", "cb", "ba"};
 		
 		Set<String> shingles = Shingle.getShingles(2, s);
+		assertEquals("Did not produce the expected number of shingles", shingles.size(), expected.length);
+		
+		for (String e : expected) {
+			assertTrue("Did not produce correct shingles", shingles.contains(e));
+		}
+	}
+	
+	@Test
+	public void threeLetterShingleTest() {
+		String s = "abcabc";
+		String[] expected = {"abc", "bca", "cab"};
+		
+		Set<String> shingles = Shingle.getShingles(3, s);
 		assertEquals("Did not produce the expected number of shingles", shingles.size(), expected.length);
 		
 		for (String e : expected) {
